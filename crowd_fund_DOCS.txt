@@ -1,0 +1,20 @@
+
+Documentation:
+
+states: 
+0 … initalize (tx.sender = fundee) [name, deadline (+hours), limit]
+1 … chip in + check of limit and time (tx.sender = funder)
+2 … payout or payback
+
+
+storage locations:
+1000 - state
+1001 - fundee
+1002 - project name
+1003 - deadline (absolute)
+1004 - limit
+
+1100 - amount of funders
+>= 1101 + k = addresses of funders
+
+>= 2000 - non protected = funders’ investment
