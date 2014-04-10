@@ -23,7 +23,6 @@ elif state == 1:
     else:
         n = contract.storage[1100]
         fbalance = contract.storage[msg.sender]
-        return(0)
         if fbalance > 0:
             contract.storage[msg.sender] = fbalance + msg.value
         elif n > 2000 - 1100:
