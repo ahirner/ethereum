@@ -38,5 +38,3 @@ else if state == 1:
         paytheresttocrowdfundingplatform = contract.storage[-1]
         contract.storage[1000] = 3
         stop
-	
-	
