@@ -1,0 +1,84 @@
+<html>
+<head>
+<script src="jquery-1.11.1.js"></script>
+<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+<table id="spa"></table>
+<table>
+<tr><td><label for="dep">Deposit</label></td><td><input id="dep" type="number" value="0"/> <select id="depunit"/></td></tr>
+<tr><td><label for="sel">Address</label></td><td><select id="sel"></select></td></tr>
+<tr><td><label for="vol">Volume</label></td><td><input id="vol" type="number" value="0"/> <select id="volunit"/></td></tr>
+<tr><td><label for="dest">Destination Address </label></td><td><input id="dest" type="text" size=50/></td></tr>
+</table>
+<button id="deposit">Deposit</button>
+<button id="send">Send</button>
+<button id="withdraw">Withdraw</button>
+<script>
+var contract = "0xd37350a29afddd2833f307f70dbc5bf7fae0e8ee";
+
+function update_addr (addr)
+{
+  $("#"+addr).html("");
+  $("<td/>", {text: addr.substring(2)}).appendTo ("#"+addr);
+  $("<td/>", {text: eth.storageAt(contract, addr).dec ()}).appendTo ("#"+addr);
+  $("<td/>", {text: eth.storageAt(contract, addr)}).appendTo ("#"+addr);
+}
+
+function add_addr (addr)
+{
+  $("<tr/>", {id: addr}).appendTo ("#spa");
+  eth.watch (contract, addr, function () {
+    update_addr (addr);
+  });
+}
+
+function add_key (key)
+{
+  $('<option/>', { value : key }).text(eth.secretToAddress (key).substring (2)).appendTo('#sel');
+  add_addr (eth.secretToAddress (key));
+}
+
+function populate_sel (sel)
+{
+  $('<option/>', { value : 1 }).text("wei").appendTo(sel);
+  $('<option/>', { value : Math.pow (10,3) }).text("Kwei").appendTo(sel);
+  $('<option/>', { value : Math.pow (10,6) }).text("Mwei").appendTo(sel);
+  $('<option/>', { value : Math.pow (10,9) }).text("Gwei").appendTo(sel);
+  $('<option/>', { value : Math.pow (10,12) }).text("szabo").appendTo(sel);
+  $('<option/>', { value : Math.pow (10,15) }).text("finney").appendTo(sel);
+  $('<option/>', { value : Math.pow (10,18) }).text("ether").appendTo(sel);
+}
+
+$(document).ready (function () {
+  for (var i = 0; i < eth.keys.length; i++) {
+	  add_key (eth.keys[i]);
+  }
+  
+  $("#send").click (function () {
+    var dwei= ($("#depunit").val() * $("#dep").val()).toString();
+    var wei = ($("#volunit").val() * $("#vol").val()).toString();
+    
+    eth.transact ($("#sel").val(), dwei, contract, "send".pad(32) + wei.pad(32) + ("0x"+$("#dest").val()).pad(32), 10000, eth.gasPrice);
+  });
+  
+  $("#withdraw").click (function () {
+    var dwei= ($("#depunit").val() * $("#dep").val()).toString();
+    var wei = ($("#volunit").val() * $("#vol").val()).toString();
+    eth.transact ($("#sel").val(), dwei, contract, "withdraw".pad(32) + wei.pad(32) + ("0x"+$("#dest").val()).pad(32), 10000, eth.gasPrice);
+  });
+  
+  $("#deposit").click (function () {
+    var dwei= ($("#depunit").val() * $("#dep").val()).toString();
+    eth.transact ($("#sel").val(), dwei, contract, "deposit".pad(32), 10000, eth.gasPrice);
+  });
+  
+  populate_sel ("#depunit");
+  populate_sel ("#volunit");
+});
+
+
+</script>
+
+</body>
+</html>
