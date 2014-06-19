@@ -1,0 +1,38 @@
+{
+  (return 0 (lll
+    {
+      (sstore (caller) (+ (sload (caller)) (callvalue)))
+      (when (= (div (calldatasize) 32) 3)
+       {
+        [cmd]:(calldataload 0)
+        [vol]:(calldataload 32)
+        [dest]:(calldataload 64)
+        (if (<= @vol (sload (caller)))
+         {
+          (if (= @cmd "withdraw")
+           {
+            (call (- (GAS) 100) @dest @vol 0 0 0 0)
+           }
+           {
+            (if (= @cmd "send")
+             {
+              (sstore @dest (+ (sload @dest) @vol))
+             }
+             {
+              (stop)
+             }
+            )
+           }
+          )
+          (sstore (caller) (- (sload (caller)) @vol))
+         }
+         {
+          (stop)
+         }
+        )
+       }
+      )
+    }
+  0))
+}
+
