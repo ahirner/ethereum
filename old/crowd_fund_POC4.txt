@@ -1,0 +1,38 @@
+if msg.sender < 2000:
+    return(0)
+
+state = contract.storage[1000]
+
+if state == 0:
+    contract.storage[1000] = 1
+    contract.storage[1001] = msg.sender
+    contract.storage[1002] = msg.data[0]
+    contract.storage[1003] = block.timestamp + 30 * msg.data[1] * 86400 / 24
+    contract.storage[1004] = msg.data[2]
+    
+elif state == 1:
+    if block.timestamp > contract.storage[1003]:
+        n = contract.storage[1100]
+        i = 1101
+        while i < 1101 + n:
+           funder = contract.storage[i]
+           send(funder, contract.storage[funder] * 0.99, tx.gas - 100)
+        paytheresttocrowdfundingplatform = contract.storage[-1]
+        contract.storage[1000] = 2
+        return(0)
+    else:
+        n = contract.storage[1100]
+        fbalance = contract.storage[msg.sender]
+        if fbalance > 0:
+            contract.storage[msg.sender] = fbalance + msg.value
+        elif n > 2000 - 1100:
+           send(msg.sender, msg.value, tx.gas - 100)
+        else:
+            contract.storage[1100] = n + 1
+            contract.storage[n] = msg.sender
+            contract.storage[msg.sender] = msg.value      
+    if contract.balance >= contract.storage[1004]:
+        send(contract.storage[1001], contract.balance * 0.99, tx.gas - 100)
+        paytheresttocrowdfundingplatform = contract.storage[-1]
+        contract.storage[1000] = 3
+        return(1)
