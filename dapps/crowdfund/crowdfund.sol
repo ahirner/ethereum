@@ -23,7 +23,7 @@ contract crowdfund {
         
         c.recipient = recipient;
         c.goal = goal;
-        c.deadline = deadline;
+        c.deadline = deadline;   
     }
     
     function contribute (uint256 id) {
@@ -41,7 +41,7 @@ contract crowdfund {
         
         if (total >= c.goal) {
             c.recipient.send (total);
-            clear (id);
+            this.clear (id);
             return;
         }
         
@@ -49,7 +49,7 @@ contract crowdfund {
             for (int256 i = 0; i < int256(c.contrib_count);i++) {
                 c.contrib [i].sender.send (c.contrib[i].value);
             }
-            clear (id);
+            this.clear (id);
         }
     }
     
