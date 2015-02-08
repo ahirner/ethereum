@@ -64,7 +64,7 @@ contract crowdfund {
             c.deadline = 0;
             c.contrib_total = 0;
             
-            for (uint256 i=0;i< uint256(c.contrib_count);i++){
+            for (uint256 i=0;i< c.contrib_count;i++){
                 c.contrib [i].sender = 0;
                 c.contrib [i].value = 0;
             }
