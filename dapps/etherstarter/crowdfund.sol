@@ -89,7 +89,7 @@ contract crowdfund {
         return campaigns[id].goal;
     }
     
-    function get_shh_identiy (uint256 id) returns (uint256 goal) {
+    function get_shh_identiy (uint256 id) returns (uint256 identiy) {
         return campaigns[id].shh_identiy;
     }
     
