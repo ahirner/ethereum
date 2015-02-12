@@ -34,7 +34,7 @@ contract crowdfund {
         var total = c.contrib_total + msg.value;
         c.contrib_total = total;
         
-        contribution con = c.contrib[c.contrib_total];
+        contribution con = c.contrib[c.contrib_count];
         
         con.sender = msg.sender;
         con.value = msg.value;
@@ -52,6 +52,7 @@ contract crowdfund {
                 c.contrib [i].sender.send (c.contrib[i].value);
             }
             this.clear (id);
+            return;
         }
     }
     
@@ -61,8 +62,8 @@ contract crowdfund {
             
             c.recipient = 0;
             c.goal = 0;
-            c.deadline = 0;
-            c.contrib_total = 0;
+            c.deadline = 0;     
+            c.contrib_total = 0;       
             
             for (uint256 i=0;i< c.contrib_count;i++){
                 c.contrib [i].sender = 0;
@@ -91,6 +92,10 @@ contract crowdfund {
     
     function get_shh_identiy (uint256 id) returns (uint256 identiy) {
         return campaigns[id].shh_identiy;
+    }
+    
+    function get_contrib_count (uint256 id) returns (uint256 contrib_count) {
+        return campaigns[id].contrib_count;
     }
     
     function get_free_id () returns (uint256 id) {
