@@ -1,0 +1,26 @@
+<html>
+<body>
+<button onClick="createContract();">Create Contract</button>
+
+<script type="text/javascript">
+
+var web3 = require('web3');
+
+var source = "contract crowdfund {\n    \n    struct contribution {\n        address sender;\n        uint256 value;\n    }\n    \n    struct campaign {\n        address recipient;\n        uint256 goal;\n        uint256 deadline;\n        uint256 contrib_total;\n        uint256 contrib_count;\n        uint256 shh_identiy;\n        mapping (uint256 => contribution) contrib;\n    }\n    \n    mapping (uint256 => campaign) campaigns;\n    \n    function create_campaign (uint256 id, address recipient, uint256 goal, uint256 deadline, uint256 shh_identiy) {\n        campaign c = campaigns[id];\n        \n        if (c.recipient != 0) return;\n        \n        c.recipient = recipient;\n        c.goal = goal;\n        c.deadline = deadline;\n        c.shh_identiy = shh_identiy;   \n    }\n    \n    function contribute (uint256 id) {\n        campaign c = campaigns[id];\n        \n        var total = c.contrib_total + msg.value;\n        c.contrib_total = total;\n        \n        contribution con = c.contrib[c.contrib_count];\n        \n        con.sender = msg.sender;\n        con.value = msg.value;\n        \n        c.contrib_count++;\n        \n        if (total >= c.goal) {\n            c.recipient.send (total);\n            this.clear (id);\n            return;\n        }\n        \n        if (block.timestamp > c.deadline) {\n            for (uint256 i = 0; i < c.contrib_count;i++) {\n                c.contrib [i].sender.send (c.contrib[i].value);\n            }\n            this.clear (id);\n            return;\n        }\n    }\n    \n    function clear (uint256 id) {\n        if (address(this) == msg.sender) {\n            campaign c = campaigns[id];\n            \n            c.recipient = 0;\n            c.goal = 0;\n            c.deadline = 0;     \n            c.contrib_total = 0;       \n            \n            for (uint256 i=0;i< c.contrib_count;i++){\n                c.contrib [i].sender = 0;\n                c.contrib [i].value = 0;\n            }\n            \n            c.contrib_count = 0;\n        }\n    }\n    \n    function get_total (uint256 id) returns (uint256 total) {\n        return campaigns[id].contrib_total;\n    }\n    \n    function get_recipient (uint256 id) returns (address recipient) {\n        return campaigns[id].recipient;\n    }\n    \n    function get_deadline (uint256 id) returns (uint256 deadline) {\n        return campaigns[id].deadline;\n    }\n    \n    function get_goal (uint256 id) returns (uint256 goal) {\n        return campaigns[id].goal;\n    }\n    \n    function get_shh_identiy (uint256 id) returns (uint256 identiy) {\n        return campaigns[id].shh_identiy;\n    }\n    \n    function get_contrib_count (uint256 id) returns (uint256 contrib_count) {\n        return campaigns[id].contrib_count;\n    }\n    \n    function get_free_id () returns (uint256 id) {\n        uint256 i = 0;\n        while (campaigns[i].recipient != 0) i++;\n        return i;\n    }\n}";
+
+var desc = [{"constant":false,"inputs":[],"name":"get_free_id","outputs":[{"name":"id","type":"uint256"}],"type":"function"},{"constant":false,"inputs":[{"name":"id","type":"uint256"}],"name":"get_deadline","outputs":[{"name":"deadline","type":"uint256"}],"type":"function"},{"constant":false,"inputs":[{"name":"id","type":"uint256"},{"name":"recipient","type":"address"},{"name":"goal","type":"uint256"},{"name":"deadline","type":"uint256"},{"name":"shh_identiy","type":"uint256"}],"name":"create_campaign","outputs":[],"type":"function"},{"constant":false,"inputs":[{"name":"id","type":"uint256"}],"name":"get_shh_identiy","outputs":[{"name":"identiy","type":"uint256"}],"type":"function"},{"constant":false,"inputs":[{"name":"id","type":"uint256"}],"name":"get_recipient","outputs":[{"name":"recipient","type":"address"}],"type":"function"},{"constant":false,"inputs":[{"name":"id","type":"uint256"}],"name":"get_goal","outputs":[{"name":"goal","type":"uint256"}],"type":"function"},{"constant":false,"inputs":[{"name":"id","type":"uint256"}],"name":"get_total","outputs":[{"name":"total","type":"uint256"}],"type":"function"},{"constant":false,"inputs":[{"name":"id","type":"uint256"}],"name":"clear","outputs":[],"type":"function"},{"constant":false,"inputs":[{"name":"id","type":"uint256"}],"name":"contribute","outputs":[],"type":"function"},{"constant":false,"inputs":[{"name":"id","type":"uint256"}],"name":"get_contrib_count","outputs":[{"name":"contrib_count","type":"uint256"}],"type":"function"}];
+
+function createContract () {
+
+    var address = web3.eth.transact({code: web3.eth.solidity(source)});
+    
+    web3.db.put ("etherstarter", "contract", address);
+    web3.db.putString ("etherstarter", "abi", JSON.stringify (desc));
+    
+    alert (address);
+}
+
+</script>
+
+</body>
+</html>
