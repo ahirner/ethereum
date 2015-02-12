@@ -1,5 +1,10 @@
 contract crowdfund {
     
+    struct shh_identity {
+        uint256 lsb;
+        uint256 msb;
+    }
+    
     struct contribution {
         address sender;
         uint256 value;
@@ -11,13 +16,13 @@ contract crowdfund {
         uint256 deadline;
         uint256 contrib_total;
         uint256 contrib_count;
-        uint256 shh_identiy;
+        shh_identity identity;
         mapping (uint256 => contribution) contrib;
     }
     
     mapping (uint256 => campaign) campaigns;
     
-    function create_campaign (uint256 id, address recipient, uint256 goal, uint256 deadline, uint256 shh_identiy) {
+    function create_campaign (uint256 id, address recipient, uint256 goal, uint256 deadline, uint256 identity_lsb, uint256 identity_msb) {
         campaign c = campaigns[id];
         
         if (c.recipient != 0) return;
@@ -25,7 +30,8 @@ contract crowdfund {
         c.recipient = recipient;
         c.goal = goal;
         c.deadline = deadline;
-        c.shh_identiy = shh_identiy;   
+        c.identity.lsb = identity_lsb;
+        c.identity.msb = identity_msb;
     }
     
     function contribute (uint256 id) {
@@ -90,8 +96,9 @@ contract crowdfund {
         return campaigns[id].goal;
     }
     
-    function get_shh_identiy (uint256 id) returns (uint256 identiy) {
-        return campaigns[id].shh_identiy;
+    function get_identity (uint256 id) returns (uint256 lsb, uint256 msb) {
+        lsb = campaigns[id].identity.lsb;
+        msb = campaigns[id].identity.msb;
     }
     
     function get_contrib_count (uint256 id) returns (uint256 contrib_count) {
