@@ -6,7 +6,7 @@ body {
 
 .header {
   padding-top: 50px;
-  padding-bottom: 30px;
+  padding-bottom: 10px;
   width: 500px;
   margin: 0 auto; }
   .header .logo {
@@ -15,112 +15,134 @@ body {
     .header .logo img {
       width: 300px; }
 
+button {
+  background-color: #42569F;
+  color: white;
+  padding: 10px 15px;
+  border: 0;
+  cursor: pointer;
+  font-size: 1em; }
+  button:hover {
+    background-color: #2f3e72;
+    -webkit-transition: background-color 200ms linear;
+    -moz-transition: background-color 200ms linear;
+    -o-transition: background-color 200ms linear;
+    -ms-transition: background-color 200ms linear;
+    transition: background-color 200ms linear; }
+
+.campaign {
+  margin-top: 10px;
+  padding: 30px;
+  background-color: #F3F3F3; }
+  .campaign .raised {
+    font-size: 1.4em;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #777; }
+    .campaign .raised .value {
+      color: #555; }
+      .campaign .raised .value span {
+        font-size: 2em;
+        color: black; }
+    .campaign .raised .total {
+      margin-top: 5px; }
+  .campaign .progress:after {
+    content: "";
+    display: table;
+    clear: both; }
+  .campaign .progress .bar {
+    margin-top: 20px;
+    width: 100%;
+    height: 40px;
+    background-color: #999; }
+    .campaign .progress .bar .inner {
+      height: 40px;
+      background-color: #42569F;
+      width: 50%; }
+  .campaign .progress .info {
+    font-weight: bold;
+    margin-top: 10px; }
+    .campaign .progress .info .percent {
+      float: left; }
+    .campaign .progress .info .time_left {
+      float: right; }
+  .campaign .notice {
+    color: #555;
+    margin-top: 20px;
+    font-size: 1.2em; }
+
 .content {
   padding-top: 10px;
-  width: 508px;
+  width: 608px;
   margin: 0 auto; }
   .content .section {
     border-top: 1px dotted gray;
     padding-top: 20px;
     padding-bottom: 40px; }
-  .content #campaigns .title {
-    margin-bottom: 40px; }
-    .content #campaigns .title button#create_new_campaign {
+
+body.home .content .image {
+  margin-top: 20px; }
+body.home .content .description {
+  margin-top: 20px; }
+body.home .content .donate {
+  margin-top: 20px; }
+  body.home .content .donate button {
+    background-color: #6ea92e;
+    width: 100%;
+    height: 50px;
+    font-size: 1.5em;
+    font-weight: bold; }
+    body.home .content .donate button:hover {
+      background-color: #40641a; }
+body.home .content .campaign {
+  margin-top: 20px; }
+
+body.admin .content #campaigns .title {
+  margin-bottom: 40px; }
+  body.admin .content #campaigns .title button#create_new_campaign {
+    font-size: 0.7em;
+    float: right; }
+body.admin .content #create_campaign {
+  display: none;
+  margin-bottom: 45px; }
+  body.admin .content #create_campaign .title a {
+    float: right;
+    font-size: 0.8em;
+    padding-top: 3px; }
+  body.admin .content #create_campaign form .field {
+    margin-top: 10px; }
+    body.admin .content #create_campaign form .field:after {
+      content: "";
+      display: table;
+      clear: both; }
+    body.admin .content #create_campaign form .field label {
+      width: 150px;
+      padding-top: 5px;
+      display: block;
+      float: left; }
+    body.admin .content #create_campaign form .field textarea, body.admin .content #create_campaign form .field input {
+      width: 450px; }
+    body.admin .content #create_campaign form .field input {
+      float: left;
+      font-size: 1.2em; }
+    body.admin .content #create_campaign form .field textarea {
+      height: 200px; }
+  body.admin .content #create_campaign form .submit {
+    margin-top: 10px; }
+    body.admin .content #create_campaign form .submit input {
       background-color: #42569F;
       color: white;
       padding: 10px 15px;
       border: 0;
       cursor: pointer;
-      font-size: 0.7em;
-      float: right; }
-      .content #campaigns .title button#create_new_campaign:hover {
+      float: right;
+      font-size: 1.2em; }
+      body.admin .content #create_campaign form .submit input:hover {
         background-color: #2f3e72;
         -webkit-transition: background-color 200ms linear;
         -moz-transition: background-color 200ms linear;
         -o-transition: background-color 200ms linear;
         -ms-transition: background-color 200ms linear;
         transition: background-color 200ms linear; }
-  .content #campaigns .campaign {
-    margin-top: 10px;
-    padding: 30px;
-    background-color: #F3F3F3; }
-    .content #campaigns .campaign .raised {
-      font-size: 1.4em;
-      font-weight: bold;
-      text-transform: uppercase;
-      color: #777; }
-      .content #campaigns .campaign .raised .value {
-        color: #555; }
-        .content #campaigns .campaign .raised .value span {
-          font-size: 2em;
-          color: black; }
-      .content #campaigns .campaign .raised .total {
-        margin-top: 5px; }
-    .content #campaigns .campaign .progress:after {
-      content: "";
-      display: table;
-      clear: both; }
-    .content #campaigns .campaign .progress .bar {
-      margin-top: 20px;
-      width: 100%;
-      height: 40px;
-      background-color: #999; }
-      .content #campaigns .campaign .progress .bar .inner {
-        height: 40px;
-        background-color: #42569F;
-        width: 50%; }
-    .content #campaigns .campaign .progress .info {
-      font-weight: bold;
-      margin-top: 10px; }
-      .content #campaigns .campaign .progress .info .percent {
-        float: left; }
-      .content #campaigns .campaign .progress .info .time_left {
-        float: right; }
-    .content #campaigns .campaign .notice {
-      color: #555;
-      margin-top: 20px;
-      font-size: 1.2em; }
-  .content #create_campaign {
-    display: none;
-    margin-bottom: 45px; }
-    .content #create_campaign .title a {
-      float: right;
-      font-size: 0.8em;
-      padding-top: 3px; }
-    .content #create_campaign form .field {
-      margin-top: 10px; }
-      .content #create_campaign form .field:after {
-        content: "";
-        display: table;
-        clear: both; }
-      .content #create_campaign form .field label {
-        width: 150px;
-        padding-top: 5px;
-        display: block;
-        float: left; }
-      .content #create_campaign form .field textarea, .content #create_campaign form .field input {
-        width: 350px; }
-      .content #create_campaign form .field input {
-        float: left;
-        font-size: 1.2em; }
-      .content #create_campaign form .field textarea {
-        height: 200px; }
-    .content #create_campaign form .submit {
-      margin-top: 10px; }
-      .content #create_campaign form .submit input {
-        float: right;
-        background-color: #42569F;
-        color: white;
-        padding: 10px 15px;
-        border: 0;
-        cursor: pointer;
-        font-size: 1.2em; }
-        .content #create_campaign form .submit input:hover {
-          background-color: #2f3e72;
-          -webkit-transition: background-color 200ms linear;
-          -moz-transition: background-color 200ms linear;
-          -o-transition: background-color 200ms linear;
-          -ms-transition: background-color 200ms linear;
-          transition: background-color 200ms linear; }
-  .content button#create_campaign {
-    background-color: blue; }
+body.admin .content button#create_campaign {
+  background-color: blue; }

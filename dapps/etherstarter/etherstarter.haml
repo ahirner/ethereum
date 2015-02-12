@@ -1,0 +1,54 @@
+!!!
+%html
+  %head
+    %title etherstarter
+    %link{:href => "stylesheets/style.css", :rel => "stylesheet"}/
+    %script{:src => "javascripts/jquery-2.1.3.min.js"}
+    %script{:src => "javascripts/script.js"}
+
+  %body.home
+
+    .header
+      .logo
+        %img{ src: 'images/logo.png'}
+
+    .content
+
+      .section
+        .title
+          %h1
+            Elon Musk for the president of Mars
+
+        .campaign
+          .raised
+            .value
+              %span
+                5000
+              finney
+            .total
+              raised of
+              %span
+                50.000
+              finney
+              goal
+          .progress
+            .bar
+              .inner
+            .info
+              .percent
+                50%
+              .time_left
+                14 days left
+          .notice
+            This campaign will close on March 11 (11:59pm PT)
+
+        .donate
+          %button{ id: 'create_new_campaign'} DONATE
+
+        .description
+          Currently, geosynchronous orbit is too far away to allow instantaneous communications. We are, after all, still limited by the speed of light and 22,000 miles of signal travel makes these orbits unsuitable for Skype conversions or Internet gaming, for example. By dropping the orbit of space Internet satellites to 750 miles, the lag time in space would be shorter than the lag time for signals to travel around on Earth through optical fibers.
+
+        .image
+          %img{ src: 'images/elon.png'}
+
+

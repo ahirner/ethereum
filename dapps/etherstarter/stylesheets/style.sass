@@ -33,7 +33,7 @@ body
 
 .header
   padding-top: 50px
-  padding-bottom: 30px
+  padding-bottom: 10px
   width: 500px
   margin: 0 auto
 
@@ -43,9 +43,54 @@ body
     img
       width: 300px
 
+button
+  +button
+  font-size: 1.0em
+
+// CAMPAIGN WIDGET
+.campaign
+  margin-top: 10px
+  padding: 30px
+  background-color: #F3F3F3
+  .raised
+    font-size: 1.4em
+    font-weight: bold
+    text-transform: uppercase
+    color: #777
+    .value
+      color: #555
+      span
+        font-size: 2.0em
+        color: black
+    .total
+      margin-top: 5px
+  .progress
+    +clearing
+    .bar
+      margin-top: 20px
+      width: 100%
+      height: 40px
+      background-color: #999
+      .inner
+        height: 40px
+        background-color: $main_color
+        width: 50%
+    .info
+      font-weight: bold
+      margin-top: 10px
+      .percent
+        float: left
+      .time_left
+        float: right
+  .notice
+    color: #555
+    margin-top: 20px
+    font-size: 1.2em
+
+
 .content
   padding-top: 10px
-  width: 508px
+  width: 608px
   margin: 0 auto
 
   .section
@@ -53,87 +98,77 @@ body
     padding-top: 20px
     padding-bottom: 40px
 
-  #campaigns
-    .title
-      margin-bottom: 40px
-      button#create_new_campaign
-        +button
-        font-size: 0.7em
-        float: right
-    .campaign
-      margin-top: 10px
-      padding: 30px
-      background-color: #F3F3F3
-      .raised
-        font-size: 1.4em
+//HOMEPAGE
+
+body.home
+
+  .content
+
+    .image
+      margin-top: 20px
+
+    .description
+      margin-top: 20px
+
+    .donate
+      margin-top: 20px
+      button
+        background-color: #6ea92e
+        width: 100%
+        height: 50px
+        font-size: 1.5em
         font-weight: bold
-        text-transform: uppercase
-        color: #777
-        .value
-          color: #555
-          span
-            font-size: 2.0em
-            color: black
-        .total
-          margin-top: 5px
-      .progress
-        +clearing
-        .bar
-          margin-top: 20px
-          width: 100%
-          height: 40px
-          background-color: #999
-          .inner
-            height: 40px
-            background-color: $main_color
-            width: 50%
-        .info
-          font-weight: bold
-          margin-top: 10px
-          .percent
-            float: left
-          .time_left
-            float: right
-      .notice
-        color: #555
-        margin-top: 20px
-        font-size: 1.2em
+        &:hover
+          background-color: #40641a
+
+    .campaign
+      margin-top: 20px
 
 
+//ADMIN
 
-  #create_campaign
-    display: none
-    margin-bottom: 45px
-    .title
-      a
-        float: right
-        font-size: 0.8em
-        padding-top: 3px
-    form
-      .field
-        +clearing
-        margin-top: 10px
-        label
-          width: 150px
-          padding-top: 5px
-          display: block
-          float: left
-        textarea, input
-          width: 350px
-        input
-          float: left
-          font-size: 1.2em
-        textarea
-          height: 200px
+body.admin
 
-      .submit
-        margin-top: 10px
-        input
+  .content
+
+    #campaigns
+      .title
+        margin-bottom: 40px
+        button#create_new_campaign
+          font-size: 0.7em
           float: right
-          +button
-          font-size: 1.2em
 
+    #create_campaign
+      display: none
+      margin-bottom: 45px
+      .title
+        a
+          float: right
+          font-size: 0.8em
+          padding-top: 3px
+      form
+        .field
+          +clearing
+          margin-top: 10px
+          label
+            width: 150px
+            padding-top: 5px
+            display: block
+            float: left
+          textarea, input
+            width: 450px
+          input
+            float: left
+            font-size: 1.2em
+          textarea
+            height: 200px
 
+        .submit
+          margin-top: 10px
+          input
+            +button
+            float: right
+            font-size: 1.2em
 
-  button#create_campaign
-    background-color: blue
+    button#create_campaign
+      background-color: blue
