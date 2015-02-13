@@ -27,13 +27,13 @@
           .raised
             .value
               %span
-                5000
-              finney
+                25.000
+              wei
             .total
               raised of
               %span
                 50.000
-              finney
+              wei
               goal
           .progress
             .bar
@@ -47,6 +47,10 @@
             This campaign will close on March 11 (11:59pm PT)
 
         .donate
+          .amount
+            Amount to pledge:
+            %input{ type: 'text', name: 'amount', id: 'amount' }
+            FINNEY
           %button{ id: 'create_new_campaign'} PLEDGE
 
         .description

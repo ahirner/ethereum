@@ -93,6 +93,8 @@ body.home .content .description {
   margin-top: 20px; }
 body.home .content .donate {
   margin-top: 20px; }
+  body.home .content .donate .amount input {
+    font-size: 1.3em; }
   body.home .content .donate button {
     background-color: #6ea92e;
     width: 100%;

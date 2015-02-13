@@ -13,10 +13,12 @@ var desc = [{"constant":false,"inputs":[],"name":"get_free_id","outputs":[{"name
 function createContract () {
 
     var address = web3.eth.transact({code: web3.eth.solidity(source)});
-    
+
     web3.db.put ("etherstarter", "contract", address);
     web3.db.putString ("etherstarter", "abi", JSON.stringify (desc));
-    
+
+    web3.db.putString('etherstarter', 'campaigns', JSON.stringify([]))
+
     alert (address);
 }
 

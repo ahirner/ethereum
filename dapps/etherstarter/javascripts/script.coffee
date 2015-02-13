@@ -48,25 +48,36 @@ jQuery ->
     crowdfund = web3.eth.contract(contract, abi)
     subscribe_whisper()
 
-  set_campaign_in_ui = (campaigns, id) ->
+  current_campaign_id = () ->
+    selector = $('select#campaigns')
+
+  set_campaign_in_ui = (campaigns, id2) ->
     campaign = $.grep campaigns, (e) ->
-      return e.id == id
-    campaign = campaigns[0]
+      return e.id == id2
+    campaign = campaign[0]
+
     $('.title h1').text(campaign.title)
     $('.description').text(campaign.description)
 
-    recipient = crowdfund.call().get_recipient(id)
+    recipient = crowdfund.call().get_recipient(id2)
 
     # if recipient == 0
 
-    goal = crowdfund.call().get_goal(id)
-    deadline = crowdfund.call().get_deadline(id)
-    progress = crowdfund.call().get_total(id)
+    if(az)
+      goal = crowdfund.call().get_goal(id2)
+      deadline = crowdfund.call().get_deadline(id2)
+      progress = crowdfund.call().get_total(id2)
+
+  $('.donate button').on 'click', (e) ->
+    amount = $('.amount input').val()
+    crowdfund.value(+amount).contribute(id)
 
   if($('body.home').length > 0)
 
-    selector = $('select#campaigns')
+    # if(az)
     campaigns = get_campaigns()
+
+    selector = $('select#campaigns')
 
     $.each campaigns, (index, campaign) ->
       if(index == 0)
@@ -78,9 +89,10 @@ jQuery ->
       }))
 
     selector.on 'change', (e) ->
+      selector = $('select#campaigns')
       id = selector.val()
-      set_campaign(campaigns, id)
-
+      campaigns = get_campaigns()
+      set_campaign_in_ui(campaigns, id)
 
 
   # ADMIN
@@ -110,6 +122,10 @@ jQuery ->
         id = crowdfund.call().get_free_id()
         retval = crowdfund.transact().create_campaign(id, recipient, goal, deadline, 0, 0)
         post_whisper(id, title, description)
+
+        $('#create_campaign').hide()
+        $('a#create_new_campaign').show()
+        alert('CREATED')
         #alert(crowdfund.call().get_recipient(id))
 
 
