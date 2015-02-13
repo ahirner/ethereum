@@ -90,22 +90,29 @@ body.home .content .campaign_selector {
 body.home .content .image {
   margin-top: 20px; }
 body.home .content .description {
-  margin-top: 20px; }
-body.home .content .donate {
   margin-top: 20px;
   padding: 10px;
   background-color: #F3F3F3; }
-  body.home .content .donate:after {
+  body.home .content .description .title {
+    font-weight: bold; }
+  body.home .content .description .inner {
+    margin-top: 20px; }
+body.home .content .pledge {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #F3F3F3;
+  display: none; }
+  body.home .content .pledge:after {
     content: "";
     display: table;
     clear: both; }
-  body.home .content .donate .amount {
+  body.home .content .pledge .amount {
     float: left;
     width: 300px;
     padding-top: 8px; }
-    body.home .content .donate .amount input {
+    body.home .content .pledge .amount input {
       font-size: 1.3em; }
-  body.home .content .donate button {
+  body.home .content .pledge button {
     float: left;
     display: block;
     background-color: #6ea92e;
@@ -113,10 +120,11 @@ body.home .content .donate {
     height: 50px;
     font-size: 1.5em;
     font-weight: bold; }
-    body.home .content .donate button:hover {
+    body.home .content .pledge button:hover {
       background-color: #40641a; }
 body.home .content .campaign {
-  margin-top: 20px; }
+  margin-top: 20px;
+  display: none; }
 
 body.admin .content #campaigns .title {
   margin-bottom: 40px; }

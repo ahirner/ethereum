@@ -73,8 +73,13 @@ jQuery ->
     time = date + '. ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec
     time
 
+  # HOME FUNCTIONS
+
+  get_selector = () ->
+    $('select#campaigns')
+
   current_campaign_id = () ->
-    selector = $('select#campaigns').val()
+    get_selector().val()
 
   set_campaign_in_ui = (id) ->
     campaign = $.grep get_campaigns(), (e) ->
@@ -82,9 +87,12 @@ jQuery ->
     campaign = campaign[0]
 
     $('.title h1').text(campaign.title)
-    $('.description').text(campaign.description)
+    $('.description .inner').text(campaign.description)
 
     recipient = crowdfund.call().get_recipient(id)
+
+    $('.pledge').show()
+    $('.campaign').show()
 
     # if recipient == 0
 
@@ -112,7 +120,7 @@ jQuery ->
       $('.notice span').text(timeConverter(deadline))
 
 
-  $('.donate button').on 'click', (e) ->
+  $('.pledge button').on 'click', (e) ->
     id = current_campaign_id()
     #alert('PLEDGING TO ' + id)
     amount = +$('.amount input').val()
@@ -132,23 +140,17 @@ jQuery ->
     # if(az)
     campaigns = get_campaigns()
 
-    selector = $('select#campaigns')
-
     $.each campaigns, (index, campaign) ->
       if(index == 0)
         set_campaign_in_ui(campaign.id)
 
-      selector.append($('<option/>', {
+      get_selector().append($('<option/>', {
         value: campaign.id,
         text : campaign.title
       }))
 
-    selector.on 'change', (e) ->
-      selector = $('select#campaigns')
-      id = selector.val()
-      campaigns = get_campaigns()
-      set_campaign_in_ui(id)
-
+    get_selector().on 'change', (e) ->
+      set_campaign_in_ui(current_campaign_id())
 
   # ADMIN
 

@@ -1,5 +1,6 @@
 $main_color: #42569F
 $main_color_dark: #2f3e72
+$light_bg: #F3F3F3
 
 @mixin clearing
   &:after
@@ -51,7 +52,7 @@ button
 .campaign
   margin-top: 10px
   padding: 30px
-  background-color: #F3F3F3
+  background-color: $light_bg
   .raised
     font-size: 1.4em
     font-weight: bold
@@ -117,12 +118,19 @@ body.home
 
     .description
       margin-top: 20px
+      padding: 10px
+      background-color: $light_bg
+      .title
+        font-weight: bold
+      .inner
+        margin-top: 20px
 
-    .donate
+    .pledge
       +clearing
       margin-top: 20px
       padding: 10px
-      background-color: #F3F3F3
+      background-color: $light_bg
+      display: none
       .amount
         float: left
         width: 300px
@@ -142,6 +150,7 @@ body.home
 
     .campaign
       margin-top: 20px
+      display: none
 
 
 //ADMIN
