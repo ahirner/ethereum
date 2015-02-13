@@ -1,0 +1,2 @@
+ruby cachify.rb etherstarter.html
+ruby cachify.rb etherstarter_admin.html 
