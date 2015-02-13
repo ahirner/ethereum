@@ -49,28 +49,40 @@ jQuery ->
     subscribe_whisper()
 
   current_campaign_id = () ->
-    selector = $('select#campaigns')
+    selector = $('select#campaigns').val()
 
-  set_campaign_in_ui = (campaigns, id2) ->
-    campaign = $.grep campaigns, (e) ->
-      return e.id == id2
+  set_campaign_in_ui = (id) ->
+    campaign = $.grep get_campaigns(), (e) ->
+      return e.id == id
     campaign = campaign[0]
 
     $('.title h1').text(campaign.title)
     $('.description').text(campaign.description)
 
-    recipient = crowdfund.call().get_recipient(id2)
+    recipient = crowdfund.call().get_recipient(id)
 
     # if recipient == 0
 
     if(az)
-      goal = crowdfund.call().get_goal(id2)
-      deadline = crowdfund.call().get_deadline(id2)
-      progress = crowdfund.call().get_total(id2)
+      goal = crowdfund.call().get_goal(id)
+      deadline = crowdfund.call().get_deadline(id)
+      raised = crowdfund.call().get_total(id)
+      #alert(id)
+      #alert(crowdfund.call().get_recipient(id))
+      $('.raised .value span').text(raised)
+
 
   $('.donate button').on 'click', (e) ->
-    amount = $('.amount input').val()
+    id = current_campaign_id()
+    #alert('PLEDGING TO ' + id)
+    amount = +$('.amount input').val()
     crowdfund.value(+amount).contribute(id)
+    #alert('SUCCESS')
+    set_campaign_in_ui(id)
+    raised = crowdfund.call().get_total(id)
+    $('.raised .value span').text(raised)
+    alert("YOU PLEDGED " + amount + " WEI")
+
 
   if($('body.home').length > 0)
 
@@ -81,7 +93,7 @@ jQuery ->
 
     $.each campaigns, (index, campaign) ->
       if(index == 0)
-        set_campaign_in_ui(campaigns, campaign.id)
+        set_campaign_in_ui(campaign.id)
 
       selector.append($('<option/>', {
         value: campaign.id,
@@ -92,7 +104,7 @@ jQuery ->
       selector = $('select#campaigns')
       id = selector.val()
       campaigns = get_campaigns()
-      set_campaign_in_ui(campaigns, id)
+      set_campaign_in_ui(id)
 
 
   # ADMIN
