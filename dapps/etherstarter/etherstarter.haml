@@ -14,10 +14,14 @@
 
     .content
 
+      .campaign_selector
+        Select campaign:
+        %select{ id: 'campaigns' }
+
       .section
         .title
           %h1
-            Elon Musk for the president of Mars
+            -#Elon Musk for the president of Mars
 
         .campaign
           .raised
@@ -43,12 +47,12 @@
             This campaign will close on March 11 (11:59pm PT)
 
         .donate
-          %button{ id: 'create_new_campaign'} DONATE
+          %button{ id: 'create_new_campaign'} PLEDGE
 
         .description
-          Currently, geosynchronous orbit is too far away to allow instantaneous communications. We are, after all, still limited by the speed of light and 22,000 miles of signal travel makes these orbits unsuitable for Skype conversions or Internet gaming, for example. By dropping the orbit of space Internet satellites to 750 miles, the lag time in space would be shorter than the lag time for signals to travel around on Earth through optical fibers.
+          -#Currently, geosynchronous orbit is too far away to allow instantaneous communications. We are, after all, still limited by the speed of light and 22,000 miles of signal travel makes these orbits unsuitable for Skype conversions or Internet gaming, for example. By dropping the orbit of space Internet satellites to 750 miles, the lag time in space would be shorter than the lag time for signals to travel around on Earth through optical fibers.
 
         .image
-          %img{ src: 'images/elon.png'}
+          -#%img{ src: 'images/elon.png'}
 
 

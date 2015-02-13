@@ -48,6 +48,41 @@ jQuery ->
     crowdfund = web3.eth.contract(contract, abi)
     subscribe_whisper()
 
+  set_campaign_in_ui = (campaigns, id) ->
+    campaign = $.grep campaigns, (e) ->
+      return e.id == id
+    campaign = campaigns[0]
+    $('.title h1').text(campaign.title)
+    $('.description').text(campaign.description)
+
+    recipient = crowdfund.call().get_recipient(id)
+
+    # if recipient == 0
+
+    goal = crowdfund.call().get_goal(id)
+    deadline = crowdfund.call().get_deadline(id)
+    progress = crowdfund.call().get_total(id)
+
+  if($('body.home').length > 0)
+
+    selector = $('select#campaigns')
+    campaigns = get_campaigns()
+
+    $.each campaigns, (index, campaign) ->
+      if(index == 0)
+        set_campaign_in_ui(campaigns, campaign.id)
+
+      selector.append($('<option/>', {
+        value: campaign.id,
+        text : campaign.title
+      }))
+
+    selector.on 'change', (e) ->
+      id = selector.val()
+      set_campaign(campaigns, id)
+
+
+
   # ADMIN
 
   if($('body.admin').length > 0)

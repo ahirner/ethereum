@@ -80,6 +80,13 @@ button {
     padding-top: 20px;
     padding-bottom: 40px; }
 
+body.home .content .campaign_selector {
+  margin-top: 20px;
+  margin-bottom: 20px; }
+  body.home .content .campaign_selector select#campaigns {
+    width: 200px;
+    height: 20px;
+    font-size: 1.5em; }
 body.home .content .image {
   margin-top: 20px; }
 body.home .content .description {
