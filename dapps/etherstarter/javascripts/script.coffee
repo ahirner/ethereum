@@ -75,7 +75,7 @@ jQuery ->
       $('.recipient_address span').text(crowdfund.call().get_recipient(id))
       percentage = (raised / goal) * 100
       $('.bar .inner').width("#{percentage}%")
-      $('.info .percent').text("#{percentage}%")
+      $('.info .percent').text("#{Math.round(percentage)}%")
 
 
   $('.donate button').on 'click', (e) ->
