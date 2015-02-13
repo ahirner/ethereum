@@ -2,7 +2,7 @@ jQuery ->
 
   az = web3?
 
-  debug = true
+  debug = false
 
   get_campaigns = () ->
     campaigns_data = web3.db.getString('etherstarter', 'campaigns')
