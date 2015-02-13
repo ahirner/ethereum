@@ -187,7 +187,7 @@ jQuery ->
     $('#create_campaign a#close').on 'click', (e) ->
       e.preventDefault()
       $('#create_campaign').hide()
-      $('a#create_new_campaign').show()
+      $('#create_new_campaign').show()
 
     $('#create_new_campaign').on 'click', (e) ->
       e.preventDefault()
