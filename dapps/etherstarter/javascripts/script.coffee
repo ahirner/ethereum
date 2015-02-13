@@ -77,6 +77,9 @@ jQuery ->
       $('.bar .inner').width("#{percentage}%")
       $('.info .percent').text("#{Math.round(percentage)}%")
 
+      days_left = Math.round((deadline - Date.now() / 1000) / (24*60*60))
+      $('.info .time_left').text("#{days_left} days left")
+
 
   $('.donate button').on 'click', (e) ->
     id = current_campaign_id()
