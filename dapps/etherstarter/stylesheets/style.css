@@ -58,7 +58,7 @@ button {
     .campaign .progress .bar .inner {
       height: 40px;
       background-color: #42569F;
-      width: 50%; }
+      width: 0%; }
   .campaign .progress .info {
     font-weight: bold;
     margin-top: 10px; }
@@ -66,7 +66,7 @@ button {
       float: left; }
     .campaign .progress .info .time_left {
       float: right; }
-  .campaign .notice {
+  .campaign .notice, .campaign .recipient_address {
     color: #555;
     margin-top: 20px;
     font-size: 1.2em; }

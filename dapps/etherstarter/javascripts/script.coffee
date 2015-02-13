@@ -70,16 +70,23 @@ jQuery ->
       #alert(id)
       #alert(crowdfund.call().get_recipient(id))
       $('.raised .value span').text(raised)
+      $('.total span').text(goal)
+
+      $('.recipient_address span').text(crowdfund.call().get_recipient(id))
+      percentage = (raised / goal) * 100
+      $('.bar .inner').width("#{percentage}%")
+      $('.info .percent').text("#{percentage}%")
 
 
   $('.donate button').on 'click', (e) ->
     id = current_campaign_id()
     #alert('PLEDGING TO ' + id)
     amount = +$('.amount input').val()
-    crowdfund.value(+amount).contribute(id)
+    crowdfund.value(amount).contribute(id)
     #alert('SUCCESS')
     set_campaign_in_ui(id)
     raised = crowdfund.call().get_total(id)
+
     $('.raised .value span').text(raised)
     alert("YOU PLEDGED " + amount + " WEI")
 
