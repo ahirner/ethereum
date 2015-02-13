@@ -102,8 +102,13 @@ jQuery ->
       $('.bar .inner').width("#{percentage}%")
       $('.info .percent').text("#{Math.round(percentage)}%")
 
-      days_left = Math.round((deadline - Date.now() / 1000) / (24*60*60))
-      $('.info .time_left').text("#{days_left} days left")
+      diff = deadline - Date.now() / 1000
+      if diff > 0
+        days_left = Math.round((diff) / (24*60*60))
+        $('.info .time_left').text("#{days_left} days left")
+      else
+        $('.info .time_left').text("campaign ended")
+
       $('.notice span').text(timeConverter(deadline))
 
 
@@ -117,7 +122,9 @@ jQuery ->
     raised = crowdfund.call().get_total(id)
 
     $('.raised .value span').text(raised)
-    alert("YOU PLEDGED " + amount + " WEI")
+    $('.amount input').val('')
+
+    #alert("YOU PLEDGED " + amount + " WEI")
 
 
   if($('body.home').length > 0)
@@ -172,7 +179,7 @@ jQuery ->
         post_whisper(id, title, description)
 
         $('#create_campaign').hide()
-        $('a#create_new_campaign').show()
+        $('#create_new_campaign').show()
         alert('CREATED')
         #alert(crowdfund.call().get_recipient(id))
 
