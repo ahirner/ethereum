@@ -4,6 +4,18 @@ jQuery ->
 
   debug = true
 
+  get_campaigns = () ->
+    campaigns_data = web3.db.getString('etherstarter', 'campaigns')
+    if(campaigns_data == '')
+      []
+    else
+      JSON.parse(campaigns_data)
+
+  add_campaign = (campaign) ->
+    campaigns = get_campaigns()
+    campaigns.push(campaign)
+    web3.db.putString('etherstarter', 'campaigns', JSON.stringify(campaigns))
+
   subscribe_whisper = () ->
     shh.watch(
       topic: [
@@ -12,8 +24,11 @@ jQuery ->
         web3.fromAscii('announce-campaign')
       ]
     ).arrived (msg) ->
-      response = JSON.parse(web3.toAscii(msg.payload))
+      campaign = JSON.parse(web3.toAscii(msg.payload))
       #alert('WHISPER RECEIVED ' + response.description)
+      add_campaign(campaign)
+      #campaigns = web3.db.getString('etherstarter', 'campaigns')
+      #alert(campaigns)
 
   post_whisper = (id, title, description) ->
     payload = web3.fromAscii(JSON.stringify({id: id, title: title, description: description}))
@@ -33,7 +48,9 @@ jQuery ->
     crowdfund = web3.eth.contract(contract, abi)
     subscribe_whisper()
 
-  if($('.admin').length > 0)
+  # ADMIN
+
+  if($('body.admin').length > 0)
 
     if(debug)
       $('#create_campaign').show()
