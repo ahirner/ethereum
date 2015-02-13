@@ -121,7 +121,8 @@ body.admin .content #create_campaign {
       display: block;
       float: left; }
     body.admin .content #create_campaign form .field textarea, body.admin .content #create_campaign form .field input {
-      width: 450px; }
+      width: 450px;
+      padding: 5px 2px; }
     body.admin .content #create_campaign form .field input {
       float: left;
       font-size: 1.2em; }

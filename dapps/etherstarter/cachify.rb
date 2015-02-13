@@ -23,16 +23,16 @@ if File.exists?(file)
       for name in NAMES
         if line.include?("#{name}.js")
           if file =~ /\.haml$/
-            line = "    %script{src: '/javascripts/#{name}.js?v=#{git_hash}-#{time}'}"
+            line = "    %script{src: 'javascripts/#{name}.js?v=#{git_hash}-#{time}'}"
           else
-            line =  "  <script src='/javascripts/script.js?v=#{git_hash}-#{time}'></script>"
+            line =  "  <script src='javascripts/script.js?v=#{git_hash}-#{time}'></script>"
           end
         end
         if line.include?("#{name}.css")
           if file =~ /\.haml$/
-            line = "    %link{rel: 'stylesheet', href: '/stylesheets/#{name}.css?v=#{git_hash}-#{time}'}"
+            line = "    %link{rel: 'stylesheet', href: 'stylesheets/#{name}.css?v=#{git_hash}-#{time}'}"
           else
-            line = "  <link rel='stylesheet' href='/stylesheets/#{name}.css?v=#{git_hash}-#{time}' />"
+            line = "  <link rel='stylesheet' href='stylesheets/#{name}.css?v=#{git_hash}-#{time}' />"
           end
         end
       end
