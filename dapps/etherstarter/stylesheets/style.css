@@ -92,13 +92,24 @@ body.home .content .image {
 body.home .content .description {
   margin-top: 20px; }
 body.home .content .donate {
-  margin-top: 20px; }
-  body.home .content .donate .amount input {
-    font-size: 1.3em; }
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #F3F3F3; }
+  body.home .content .donate:after {
+    content: "";
+    display: table;
+    clear: both; }
+  body.home .content .donate .amount {
+    float: left;
+    width: 300px;
+    padding-top: 8px; }
+    body.home .content .donate .amount input {
+      font-size: 1.3em; }
   body.home .content .donate button {
-    margin-top: 10px;
+    float: left;
+    display: block;
     background-color: #6ea92e;
-    width: 100%;
+    width: 280px;
     height: 50px;
     font-size: 1.5em;
     font-weight: bold; }
