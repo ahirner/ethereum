@@ -48,6 +48,31 @@ jQuery ->
     crowdfund = web3.eth.contract(contract, abi)
     subscribe_whisper()
 
+  timeConverter = (UNIX_timestamp) ->
+    a = new Date(UNIX_timestamp * 1000)
+    months = [
+      'Jan'
+      'Feb'
+      'Mar'
+      'Apr'
+      'May'
+      'Jun'
+      'Jul'
+      'Aug'
+      'Sep'
+      'Oct'
+      'Nov'
+      'Dec'
+    ]
+    year = a.getFullYear()
+    month = months[a.getMonth()]
+    date = a.getDate()
+    hour = a.getHours()
+    min = a.getMinutes()
+    sec = a.getSeconds()
+    time = date + '. ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec
+    time
+
   current_campaign_id = () ->
     selector = $('select#campaigns').val()
 
@@ -79,6 +104,7 @@ jQuery ->
 
       days_left = Math.round((deadline - Date.now() / 1000) / (24*60*60))
       $('.info .time_left').text("#{days_left} days left")
+      $('.notice span').text(timeConverter(deadline))
 
 
   $('.donate button').on 'click', (e) ->
