@@ -86,6 +86,8 @@ jQuery ->
       return e.id == id
     campaign = campaign[0]
 
+    get_selector().val(id)
+
     $('.title h1').text(campaign.title)
     $('.description .inner').text(campaign.description)
 
@@ -152,6 +154,10 @@ jQuery ->
     get_selector().on 'change', (e) ->
       set_campaign_in_ui(current_campaign_id())
 
+    id = Url.queryString("campaign_id")
+    if id
+      set_campaign_in_ui(id)
+
   # ADMIN
 
   if($('body.admin').length > 0)
@@ -180,8 +186,11 @@ jQuery ->
         retval = crowdfund.transact().create_campaign(id, recipient, goal, deadline, 0, 0)
         post_whisper(id, title, description)
 
-        $('#create_campaign').hide()
-        $('#create_new_campaign').show()
+        if Url.queryString("create") != '1'
+          $('#create_campaign').hide()
+          $('#create_new_campaign').show()
+
+        #window.location.href = "etherstarter.html?campaign_id=#{id}"
         alert('CREATED')
         #alert(crowdfund.call().get_recipient(id))
 

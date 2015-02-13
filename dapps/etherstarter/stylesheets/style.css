@@ -70,6 +70,8 @@ button {
     color: #555;
     margin-top: 20px;
     font-size: 1.2em; }
+  .campaign .recipient_address {
+    color: #999; }
 
 .content {
   padding-top: 10px;
@@ -80,13 +82,33 @@ button {
     padding-top: 20px;
     padding-bottom: 40px; }
 
-body.home .content .campaign_selector {
+body.home .content .campaign_header {
   margin-top: 20px;
   margin-bottom: 20px; }
-  body.home .content .campaign_selector select#campaigns {
-    width: 200px;
-    height: 20px;
-    font-size: 1.5em; }
+  body.home .content .campaign_header:after {
+    content: "";
+    display: table;
+    clear: both; }
+  body.home .content .campaign_header .campaign_selector {
+    float: left; }
+    body.home .content .campaign_header .campaign_selector select#campaigns {
+      width: 200px;
+      height: 20px;
+      font-size: 1.5em; }
+  body.home .content .campaign_header a {
+    background-color: #42569F;
+    color: white;
+    padding: 10px 15px;
+    border: 0;
+    cursor: pointer;
+    float: right; }
+    body.home .content .campaign_header a:hover {
+      background-color: #2f3e72;
+      -webkit-transition: background-color 200ms linear;
+      -moz-transition: background-color 200ms linear;
+      -o-transition: background-color 200ms linear;
+      -ms-transition: background-color 200ms linear;
+      transition: background-color 200ms linear; }
 body.home .content .image {
   margin-top: 20px; }
 body.home .content .description {

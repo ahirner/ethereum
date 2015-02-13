@@ -4,6 +4,7 @@
     %title etherstarter
     %link{:href => "stylesheets/style.css", :rel => "stylesheet"}/
     %script{:src => "javascripts/jquery-2.1.3.min.js"}
+    %script{:src => "javascripts/url.min.js"}
     %script{:src => "javascripts/script.js"}
 
   %body.home
@@ -14,34 +15,33 @@
 
     .content
 
-      .campaign_selector
-        Select campaign:
-        %select{ id: 'campaigns' }
+      .campaign_header
+        .campaign_selector
+          Select campaign:
+          %select{ id: 'campaigns' }
+
+        -#%a{ href: 'etherstarter_admin.html?create=1' } Create new campaign
 
       .section
         .title
           %h1
-            -#Elon Musk for the president of Mars
 
         .campaign
           .raised
             .value
               %span
-                25.000
               wei
             .total
               raised of
               %span
-                50.000
-              wei
-              goal
+              wei goal
           .progress
             .bar
               .inner
             .info
               .percent
               .time_left
-                -#14 days left
+
           .recipient_address
             Recipient:
             %span
@@ -54,7 +54,7 @@
             Amount:
             %input{ type: 'text', name: 'amount', id: 'amount' }
             wei
-          %button{ id: 'create_new_campaign'} PLEDGE
+          %button PLEDGE
 
         .description
           .title

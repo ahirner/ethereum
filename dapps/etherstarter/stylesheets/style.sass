@@ -87,6 +87,8 @@ button
     color: #555
     margin-top: 20px
     font-size: 1.2em
+  .recipient_address
+    color: #999
 
 
 .content
@@ -105,13 +107,19 @@ body.home
 
   .content
 
-    .campaign_selector
+    .campaign_header
+      +clearing
       margin-top: 20px
       margin-bottom: 20px
-      select#campaigns
-        width: 200px
-        height: 20px
-        font-size: 1.5em
+      .campaign_selector
+        float: left
+        select#campaigns
+          width: 200px
+          height: 20px
+          font-size: 1.5em
+      a
+        +button
+        float: right
 
     .image
       margin-top: 20px
