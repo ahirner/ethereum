@@ -1,2 +1,3 @@
 ruby cachify.rb etherstarter.html
 ruby cachify.rb etherstarter_admin.html 
+ruby cachify.rb etherstarter_create.html

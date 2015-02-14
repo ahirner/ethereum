@@ -82,6 +82,15 @@ button {
     padding-top: 20px;
     padding-bottom: 40px; }
 
+body.create .notice, body.create .address {
+  margin-top: 10px; }
+body.create .notice {
+  font-weight: bold; }
+body.create .address {
+  color: #777; }
+  body.create .address span {
+    color: black; }
+
 body.home .content .campaign_header {
   margin-top: 20px;
   margin-bottom: 20px; }
@@ -112,6 +121,7 @@ body.home .content .campaign_header {
 body.home .content .image {
   margin-top: 20px; }
 body.home .content .description {
+  display: none;
   margin-top: 20px;
   padding: 10px;
   background-color: #F3F3F3; }

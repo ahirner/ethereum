@@ -1,52 +1,6 @@
 jQuery ->
 
-  az = web3?
-
   debug = false
-
-  get_campaigns = () ->
-    campaigns_data = web3.db.getString('etherstarter', 'campaigns')
-    if(campaigns_data == '')
-      []
-    else
-      JSON.parse(campaigns_data)
-
-  add_campaign = (campaign) ->
-    campaigns = get_campaigns()
-    campaigns.push(campaign)
-    web3.db.putString('etherstarter', 'campaigns', JSON.stringify(campaigns))
-
-  subscribe_whisper = () ->
-    shh.watch(
-      topic: [
-        web3.fromAscii('etherstarter')
-        web3.fromAscii(contract)
-        web3.fromAscii('announce-campaign')
-      ]
-    ).arrived (msg) ->
-      campaign = JSON.parse(web3.toAscii(msg.payload))
-      #alert('WHISPER RECEIVED ' + response.description)
-      add_campaign(campaign)
-      #campaigns = web3.db.getString('etherstarter', 'campaigns')
-      #alert(campaigns)
-
-  post_whisper = (id, title, description) ->
-    payload = web3.fromAscii(JSON.stringify({id: id, title: title, description: description}))
-    shh.post
-      topic: [
-        web3.fromAscii('etherstarter')
-        web3.fromAscii(contract)
-        web3.fromAscii('announce-campaign')
-      ]
-      payload: payload
-      ttl: 600
-
-  if(az)
-    shh = web3.shh
-    contract = web3.db.get('etherstarter', 'contract')
-    abi = JSON.parse(web3.db.getString('etherstarter', 'abi'))
-    crowdfund = web3.eth.contract(contract, abi)
-    subscribe_whisper()
 
   timeConverter = (UNIX_timestamp) ->
     a = new Date(UNIX_timestamp * 1000)
@@ -73,32 +27,77 @@ jQuery ->
     time = date + '. ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec
     time
 
-  # HOME FUNCTIONS
+  get_campaigns = () ->
+    campaigns_data = web3.db.getString('etherstarter', 'campaigns')
+    if(campaigns_data == '')
+      []
+    else
+      JSON.parse(campaigns_data)
 
-  get_selector = () ->
-    $('select#campaigns')
+  add_campaign = (campaign) ->
+    campaigns = get_campaigns()
+    campaigns.push(campaign)
+    web3.db.putString('etherstarter', 'campaigns', JSON.stringify(campaigns))
 
-  current_campaign_id = () ->
-    get_selector().val()
+  subscribe_to_whispers = () ->
+    shh.watch(
+      topic: [
+        web3.fromAscii('etherstarter')
+        web3.fromAscii(contract)
+        web3.fromAscii('announce-campaign')
+      ]
+    ).arrived (msg) ->
+      campaign = JSON.parse(web3.toAscii(msg.payload))
+      #alert('WHISPER RECEIVED ' + response.description)
+      add_campaign(campaign)
+      #campaigns = web3.db.getString('etherstarter', 'campaigns')
+      #alert(campaigns)
 
-  set_campaign_in_ui = (id) ->
-    campaign = $.grep get_campaigns(), (e) ->
-      return e.id == id
-    campaign = campaign[0]
+  post_whisper = (id, title, description) ->
+    payload = web3.fromAscii(JSON.stringify({id: id, title: title, description: description}))
+    shh.post
+      topic: [
+        web3.fromAscii('etherstarter')
+        web3.fromAscii(contract)
+        web3.fromAscii('announce-campaign')
+      ]
+      payload: payload
+      ttl: 600
 
-    get_selector().val(id)
+  shh = web3.shh
+  contract = web3.db.get('etherstarter', 'contract')
+  abi = JSON.parse(web3.db.getString('etherstarter', 'abi'))
+  crowdfund = web3.eth.contract(contract, abi)
+  subscribe_to_whispers()
 
-    $('.title h1').text(campaign.title)
-    $('.description .inner').text(campaign.description)
+  # HOME
 
-    recipient = crowdfund.call().get_recipient(id)
+  if($('body.home').length > 0)
 
-    $('.pledge').show()
-    $('.campaign').show()
+    get_selector = () ->
+      $('select#campaigns')
 
-    # if recipient == 0
+    current_campaign_id = () ->
+      get_selector().val()
 
-    if(az)
+    show_campaign = (id) ->
+      campaign = $.grep get_campaigns(), (e) ->
+        e.id == id
+      campaign = campaign[0]
+
+      get_selector().val(id)
+
+      $('.title h1').text(campaign.title)
+      $('.description .inner').text(campaign.description)
+      $('.description').show()
+
+      recipient = crowdfund.call().get_recipient(id)
+
+      $('.pledge').show()
+      $('.campaign').show()
+
+      # if recipient == 0
+
       goal = crowdfund.call().get_goal(id)
       deadline = crowdfund.call().get_deadline(id)
       raised = crowdfund.call().get_total(id)
@@ -121,30 +120,25 @@ jQuery ->
 
       $('.notice span').text(timeConverter(deadline))
 
+    $('.pledge button').on 'click', (e) ->
+      id = current_campaign_id()
+      #alert('PLEDGING TO ' + id)
+      amount = +$('.amount input').val()
+      crowdfund.value(amount).contribute(id)
+      #alert('SUCCESS')
+      show_campaign(id)
+      raised = crowdfund.call().get_total(id)
 
-  $('.pledge button').on 'click', (e) ->
-    id = current_campaign_id()
-    #alert('PLEDGING TO ' + id)
-    amount = +$('.amount input').val()
-    crowdfund.value(amount).contribute(id)
-    #alert('SUCCESS')
-    set_campaign_in_ui(id)
-    raised = crowdfund.call().get_total(id)
+      $('.raised .value span').text(raised)
+      $('.amount input').val('')
 
-    $('.raised .value span').text(raised)
-    $('.amount input').val('')
+      #alert("YOU PLEDGED " + amount + " WEI")
 
-    #alert("YOU PLEDGED " + amount + " WEI")
-
-
-  if($('body.home').length > 0)
-
-    # if(az)
     campaigns = get_campaigns()
 
     $.each campaigns, (index, campaign) ->
       if(index == 0)
-        set_campaign_in_ui(campaign.id)
+        show_campaign(campaign.id)
 
       get_selector().append($('<option/>', {
         value: campaign.id,
@@ -152,11 +146,11 @@ jQuery ->
       }))
 
     get_selector().on 'change', (e) ->
-      set_campaign_in_ui(current_campaign_id())
+      show_campaign(current_campaign_id())
 
     id = Url.queryString("campaign_id")
     if id
-      set_campaign_in_ui(id)
+      show_campaign(id)
 
   # ADMIN
 
@@ -181,18 +175,17 @@ jQuery ->
       deadline = (Date.now() / 1000) + +form.find('#duration').val()*24*60*60
       recipient = '0x' + form.find('#recipient').val()
 
-      if(az)
-        id = crowdfund.call().get_free_id()
-        retval = crowdfund.transact().create_campaign(id, recipient, goal, deadline, 0, 0)
-        post_whisper(id, title, description)
+      id = crowdfund.call().get_free_id()
+      retval = crowdfund.transact().create_campaign(id, recipient, goal, deadline, 0, 0)
+      post_whisper(id, title, description)
 
-        if Url.queryString("create") != '1'
-          $('#create_campaign').hide()
-          $('#create_new_campaign').show()
+      if Url.queryString("create") != '1'
+        $('#create_campaign').hide()
+        $('#create_new_campaign').show()
 
-        #window.location.href = "etherstarter.html?campaign_id=#{id}"
-        alert('CREATED')
-        #alert(crowdfund.call().get_recipient(id))
+      #window.location.href = "etherstarter.html?campaign_id=#{id}"
+      alert('CREATED')
+      #alert(crowdfund.call().get_recipient(id))
 
 
     $('#create_campaign a#close').on 'click', (e) ->
