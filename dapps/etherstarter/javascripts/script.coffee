@@ -1,6 +1,6 @@
 jQuery ->
 
-  debug = false
+  debug = true
 
   web3 = require('web3')
   web3.setProvider(new web3.providers.HttpSyncProvider('http://localhost:3000/client'))
@@ -202,8 +202,8 @@ jQuery ->
         $('#create_campaign').hide()
         $('#create_new_campaign').show()
 
-      #window.location.href = "etherstarter.html?campaign_id=#{id}"
-      alert('CREATED')
+      window.location.href = "/?campaign_id=#{id}"
+      #alert('CREATED')
       #alert(crowdfund.call().get_recipient(id))
 
 
