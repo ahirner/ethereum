@@ -1,38 +1,45 @@
 <html>
 <head>
-  <link rel='stylesheet' href='stylesheets/style.css?v=c1d1be69cd-20150214T212119Z' />
+  <link rel='stylesheet' href='stylesheets/style.css' />
   <script src='javascripts/jquery-2.1.3.min.js'></script>
-  <script src='javascripts/script.js?v=c1d1be69cd-20150214T212119Z'></script>
   <script type="text/javascript" src="../dist/bignumber.min.js"></script>
   <script type="text/javascript" src="../dist/ethereum.min.js"></script>
 
 <script type="text/javascript">
 
-  var web3 = require('web3');
-  web3.setProvider(new web3.providers.HttpSyncProvider('http://localhost:8080'));
+  $(function () {
 
-  var source = "CROWDFUND_SOL_SOURCE";
+    var web3 = require('web3');
+    web3.setProvider(new web3.providers.HttpSyncProvider('http://localhost:8090'));
 
-  var desc = CROWDFUND_SOL_ABI;
+    var source = "CROWDFUND_SOL_SOURCE";
 
-  function createContract () {
+    var desc = CROWDFUND_SOL_ABI;
 
-    var address = web3.eth.transact({code: web3.eth.solidity(source)})
+    function createContract () {
 
-    web3.db.put ("etherstarter", "contract", address)
-    web3.db.putString ("etherstarter", "abi", JSON.stringify(desc))
-    web3.db.putString('etherstarter', 'campaigns', JSON.stringify([]))
+      var address = web3.eth.transact({code: web3.eth.solidity(source)})
 
-    $('.notice').html("Created!")
-    $('.address').html("Address: <span>" + address + "</span>")
-    //alert(address)
-  }
+      web3.db.put ("etherstarter", "contract", address)
+      web3.db.putString ("etherstarter", "abi", JSON.stringify(desc))
+      web3.db.putString('etherstarter', 'campaigns', JSON.stringify([]))
+
+      $('.notice').html("Created!")
+      $('.address').html("Address: <span>" + address + "</span>")
+      //alert(address)
+    }
+
+    $('#create_contract').on('click', function(e) {
+      e.preventDefault()
+      createContract()
+    })
+  })
 
   </script>
 </head>
 
 <body class='create'>
-  <button onClick="createContract();">Create Contract</button>
+  <button id='create_contract'>Create Contract</button>
   <div class='notice'></div>
   <div class='address'></div>
 </body>
