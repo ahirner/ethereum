@@ -179,6 +179,8 @@ jQuery ->
       retval = crowdfund.transact().create_campaign(id, recipient, goal, deadline, 0, 0)
       post_whisper(id, title, description)
 
+      form.find('input[type=text], textarea').val('')
+
       if Url.queryString("create") != '1'
         $('#create_campaign').hide()
         $('#create_new_campaign').show()
