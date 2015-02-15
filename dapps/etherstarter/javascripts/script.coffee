@@ -60,10 +60,10 @@ jQuery ->
     ).arrived (msg) ->
       campaign = JSON.parse(web3.toAscii(msg.payload))
       #alert('WHISPER RECEIVED ' + response.description)
-      
+
       if (msg.from == get_campaign_identity (campaign.id))
         add_campaign(campaign)
-      
+
 
   post_whisper = (id, shh_identity, title, description) ->
     payload = web3.fromAscii(JSON.stringify({id: id, title: title, description: description}))
@@ -181,14 +181,14 @@ jQuery ->
 
     form.on 'submit', (e) ->
       e.preventDefault()
-      
+
       title = form.find('#title').val()
       description = form.find('#description').val()
       goal = +form.find('#goal').val()
       deadline = (Date.now() / 1000) + +form.find('#duration').val()*24*60*60
       recipient = '0x' + form.find('#recipient').val()
       shh_identity = web3.shh.newIdentity()
-            
+
       shh_identity_n = new BigNumber(shh_identity.substring(2), 16)
       lsb = shh_identity_n.modulo(new BigNumber(2).toPower(256))
       msb = shh_identity_n.minus(lsb).dividedBy(new BigNumber(2).toPower(256))
