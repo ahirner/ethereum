@@ -1,0 +1,40 @@
+<html>
+<head>
+  <link rel='stylesheet' href='stylesheets/style.css?v=c1d1be69cd-20150214T212119Z' />
+  <script src='javascripts/jquery-2.1.3.min.js'></script>
+  <script src='javascripts/script.js?v=c1d1be69cd-20150214T212119Z'></script>
+  <script type="text/javascript" src="../dist/bignumber.min.js"></script>
+  <script type="text/javascript" src="../dist/ethereum.min.js"></script>
+
+<script type="text/javascript">
+
+  var web3 = require('web3');
+  web3.setProvider(new web3.providers.HttpSyncProvider('http://localhost:8080'));
+
+  var source = "CROWDFUND_SOL_SOURCE";
+
+  var desc = CROWDFUND_SOL_ABI;
+
+  function createContract () {
+
+    var address = web3.eth.transact({code: web3.eth.solidity(source)})
+
+    web3.db.put ("etherstarter", "contract", address)
+    web3.db.putString ("etherstarter", "abi", JSON.stringify(desc))
+    web3.db.putString('etherstarter', 'campaigns', JSON.stringify([]))
+
+    $('.notice').html("Created!")
+    $('.address').html("Address: <span>" + address + "</span>")
+    //alert(address)
+  }
+
+  </script>
+</head>
+
+<body class='create'>
+  <button onClick="createContract();">Create Contract</button>
+  <div class='notice'></div>
+  <div class='address'></div>
+</body>
+
+</html>
