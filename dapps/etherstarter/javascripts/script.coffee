@@ -3,7 +3,7 @@ jQuery ->
   debug = false
 
   web3 = require('web3')
-  web3.setProvider(new web3.providers.HttpSyncProvider('http://localhost:8090'))
+  web3.setProvider(new web3.providers.HttpSyncProvider('http://localhost:3000/client'))
 
   timeConverter = (UNIX_timestamp) ->
     a = new Date(UNIX_timestamp * 1000)
@@ -43,11 +43,11 @@ jQuery ->
     web3.db.putString('etherstarter', 'campaigns', JSON.stringify(campaigns))
 
   reconstruct_identity = (lsb, msb) ->
-    shh_identity="0x"+msb.times(new BigNumber(2).toPower(256)).plus(lsb).toString(16)
+    shh_identity = "0x" + msb.times(new BigNumber(2).toPower(256)).plus(lsb).toString(16)
 
   get_campaign_identity = (id) ->
-    lsb=crowdfund.call().get_identity(id)[0]
-    msb=crowdfund.call().get_identity(id)[1]
+    lsb = crowdfund.call().get_identity(id)[0]
+    msb = crowdfund.call().get_identity(id)[1]
     reconstruct_identity(lsb, msb);
 
   subscribe_to_whispers = () ->

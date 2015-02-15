@@ -1,2 +1,4 @@
 #!/usr/bin/env bash
-eth -j -m 10 -n off --json-rpc-port 8090
+# remove the DB if it becomes corrupt
+# rm -rf ~/Library/Application\ Support/Ethereum/
+eth -j -f -m 10 -n off --json-rpc-port 8090
