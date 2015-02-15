@@ -2,8 +2,8 @@ jQuery ->
 
   debug = false
 
-  web3 = require('web3');
-  web3.setProvider(new web3.providers.HttpSyncProvider('http://localhost:8080'));
+  web3 = require('web3')
+  web3.setProvider(new web3.providers.HttpSyncProvider('http://localhost:8090'))
 
   timeConverter = (UNIX_timestamp) ->
     a = new Date(UNIX_timestamp * 1000)
@@ -56,7 +56,7 @@ jQuery ->
       #campaigns = web3.db.getString('etherstarter', 'campaigns')
       #alert(campaigns)
 
-  post_whisper = (id, title, description) ->
+  post_whisper = (id, shh_identity, title, description) ->
     payload = web3.fromAscii(JSON.stringify({id: id, title: title, description: description}))
     shh.post
       topic: [
@@ -64,6 +64,7 @@ jQuery ->
         web3.fromAscii(contract)
         web3.fromAscii('announce-campaign')
       ]
+      from: shh_identity
       payload: payload
       ttl: 600
 
@@ -185,7 +186,7 @@ jQuery ->
 
       id = crowdfund.call().get_free_id()
       retval = crowdfund.transact().create_campaign(id, recipient, goal, deadline, lsb, msb)
-      post_whisper(id, title, description)
+      post_whisper(id, shh_identity, title, description)
       form.find('input[type=text], textarea').val('')
 
       if Url.queryString("create") != '1'

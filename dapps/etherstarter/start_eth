@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-eth -j -m 10 -n off --json-rpc-port 809
+eth -j -m 10 -n off --json-rpc-port 8090
