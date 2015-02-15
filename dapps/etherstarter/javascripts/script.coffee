@@ -42,6 +42,14 @@ jQuery ->
     campaigns.push(campaign)
     web3.db.putString('etherstarter', 'campaigns', JSON.stringify(campaigns))
 
+  reconstruct_identity = (lsb, msb) ->
+    shh_identity="0x"+msb.times(new BigNumber(2).toPower(256)).plus(lsb).toString(16)
+
+  get_campaign_identity = (id) ->
+    lsb=crowdfund.call().get_identity(id)[0]
+    msb=crowdfund.call().get_identity(id)[1]
+    reconstruct_identity(lsb, msb);
+
   subscribe_to_whispers = () ->
     shh.watch(
       topic: [
@@ -52,9 +60,10 @@ jQuery ->
     ).arrived (msg) ->
       campaign = JSON.parse(web3.toAscii(msg.payload))
       #alert('WHISPER RECEIVED ' + response.description)
-      add_campaign(campaign)
-      #campaigns = web3.db.getString('etherstarter', 'campaigns')
-      #alert(campaigns)
+      
+      if (msg.from == get_campaign_identity (campaign.id))
+        add_campaign(campaign)
+      
 
   post_whisper = (id, shh_identity, title, description) ->
     payload = web3.fromAscii(JSON.stringify({id: id, title: title, description: description}))
