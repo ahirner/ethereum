@@ -2,6 +2,9 @@ jQuery ->
 
   debug = false
 
+  web3 = require('web3');
+  web3.setProvider(new web3.providers.HttpSyncProvider('http://localhost:8080'));
+
   timeConverter = (UNIX_timestamp) ->
     a = new Date(UNIX_timestamp * 1000)
     months = [
@@ -168,17 +171,21 @@ jQuery ->
 
     form.on 'submit', (e) ->
       e.preventDefault()
-
+      
       title = form.find('#title').val()
       description = form.find('#description').val()
       goal = +form.find('#goal').val()
       deadline = (Date.now() / 1000) + +form.find('#duration').val()*24*60*60
       recipient = '0x' + form.find('#recipient').val()
+      shh_identity = web3.shh.newIdentity()
+            
+      shh_identity_n = new BigNumber(shh_identity.substring(2), 16)
+      lsb = shh_identity_n.modulo(new BigNumber(2).toPower(256))
+      msb = shh_identity_n.minus(lsb).dividedBy(new BigNumber(2).toPower(256))
 
       id = crowdfund.call().get_free_id()
-      retval = crowdfund.transact().create_campaign(id, recipient, goal, deadline, 0, 0)
+      retval = crowdfund.transact().create_campaign(id, recipient, goal, deadline, lsb, msb)
       post_whisper(id, title, description)
-
       form.find('input[type=text], textarea').val('')
 
       if Url.queryString("create") != '1'
