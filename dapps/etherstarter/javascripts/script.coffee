@@ -120,9 +120,9 @@ jQuery ->
       $('.total span').text(goal)
 
       $('.recipient_address span').text(crowdfund.call().get_recipient(id))
-      percentage = (raised / goal) * 100
+      percentage = Math.min(100, (raised / goal) * 100)
       $('.bar .inner').width("#{percentage}%")
-      $('.info .percent').text("#{Math.round(percentage)}%")
+      $('.info .percent').text("#{Math.floor(percentage)}%")
 
       diff = deadline - Date.now() / 1000
       if diff > 0
