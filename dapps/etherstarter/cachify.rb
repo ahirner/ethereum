@@ -42,5 +42,5 @@ if File.exists?(file)
 
   #FileUtils.mv("#{file}.bak", file)
 
-  puts "cachified"
+  #puts "cachified"
 end

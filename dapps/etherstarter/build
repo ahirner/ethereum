@@ -1,2 +1,15 @@
-./cachify
+echo "compiling coffeescript..."
+coffee -c javascripts/script.coffee 
+
+echo "compiling sass..."
+sass stylesheets/style.sass > stylesheets/style.css
+
+echo "compiling haml..."
+haml etherstarter.haml > etherstarter.html
+haml etherstarter_admin.haml > etherstarter_admin.html
+
+echo "running mkcreate..."
 ./tools/mkcreate
+
+echo "cachifying..."
+./cachify
