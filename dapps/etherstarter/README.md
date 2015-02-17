@@ -11,6 +11,11 @@ node server.js
 
 ```
 ./build
+
+### For build script (haml and sass binaries)
+```
+gem install haml
+gem install sass
 ```
 
 ### Run eth client:
