@@ -202,8 +202,8 @@ jQuery ->
         $('#create_campaign').hide()
         $('#create_new_campaign').show()
 
-      window.location.href = "/?campaign_id=#{id}"
-      #alert('CREATED')
+      #window.location.href = "/?campaign_id=#{id}"
+      alert('CREATED')
       #alert(crowdfund.call().get_recipient(id))
 
 
