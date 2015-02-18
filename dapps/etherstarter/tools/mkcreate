@@ -1,1 +1,1 @@
-solc crowdfund.sol --json-abi file && sed -e "s#CROWDFUND_SOL_ABI#$(cat crowdfund.abi | tr -d '\n' | tr -d ' ')#" -e "s#CROWDFUND_SOL_SOURCE#$(cat crowdfund.sol | tr '\n' ' ')#" etherstarter_create.html_template > etherstarter_create.html && rm -f crowdfund.abi
+solc crowdfund.sol --json-abi file && sed -e "s#CROWDFUND_SOL_ABI#$(cat crowdfund.abi | tr -d '\n' | tr -d ' ')#" -e "s#CROWDFUND_SOL_SOURCE#$(cat crowdfund.sol | tr '\n' '@' | sed -e 's#@#\\\\\\n#g')#" etherstarter_create.html_template > etherstarter_create.html && rm -f crowdfund.abi
