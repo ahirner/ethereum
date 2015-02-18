@@ -7,6 +7,12 @@ npm install
 node server.js
 ```
 
+### Build the project:
+
+```
+./build
+```
+
 ### Run eth client:
 
 ```
@@ -15,4 +21,4 @@ node server.js
 
 ### Visit `http://localhost:3000`
 
-Remember to recompile `etherstart_create.html_template` by `tools/mkcreate` after changes to that file.
+Remember to recompile `etherstart_create.html_template` by `tools/mkcreate` or `./build` after changes to that file.
