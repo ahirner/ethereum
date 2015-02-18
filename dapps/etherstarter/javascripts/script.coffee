@@ -193,8 +193,9 @@ jQuery ->
       lsb = shh_identity_n.modulo(new BigNumber(2).toPower(256))
       msb = shh_identity_n.minus(lsb).dividedBy(new BigNumber(2).toPower(256))
 
-      id = crowdfund.call().compute_id(recipient, goal, deadline, lsb, msb)
-      retval = crowdfund.transact().create_campaign(recipient, goal, deadline, lsb, msb)
+      id = crowdfund.call().compute_id(recipient, goal, deadline, lsb, msb, 0)
+      alert(id);
+      retval = crowdfund.transact().create_campaign(recipient, goal, deadline, lsb, msb, 0)
       post_whisper(id, shh_identity, title, description)
       form.find('input[type=text], textarea').val('')
 
