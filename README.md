@@ -1,4 +1,6 @@
-ethereum
+Ethereum Vienna Repository
 ========
 
-Ethereum Demos
+Meetup slides and ethereum demos
+
+http://meetup.com/Ethereum-Vienna/
