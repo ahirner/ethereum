@@ -1,0 +1,1 @@
+Repositories have been moved to https://github.com/ethereum-vienna-meetup/
